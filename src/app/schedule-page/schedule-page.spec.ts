@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SchedulePage } from './schedule-page';
 
 describe('SchedulePage', () => {
@@ -10,7 +9,7 @@ describe('SchedulePage', () => {
     await TestBed.configureTestingModule({
       imports: [SchedulePage]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SchedulePage);
     component = fixture.componentInstance;
