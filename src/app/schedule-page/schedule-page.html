@@ -1,2 +1,17 @@
-<p>schedule-page works!</p>
-<p>Calendar Component</p>
+<div class="schedule-form-wrapper">
+	<h2>Schedule Page</h2>
+	<div class="input-container">
+		<label for="meeting-title">Meeting Title:</label>
+		<input type="text" id="meeting-title" name="meeting-title" placeholder="Enter meeting title">
+	</div>
+	<div class="input-container">
+		<label for="meeting-description">Meeting Description:</label>
+		<input type="text" id="meeting-description" name="meeting-description" placeholder="Enter meeting description">
+	</div>
+		<div class="input-container">
+			<label for="datetime">Select date and time:</label>
+			<input type="datetime-local" id="datetime" name="datetime">
+		</div>
+		<button type="submit">Schedule Meeting</button>
+	<button type="button" (click)="logout()">Logout</button>
+</div>
