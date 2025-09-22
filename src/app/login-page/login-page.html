@@ -1,11 +1,16 @@
 <main>
     <div>
-        <h1>
-            Login
-        </h1>
-        <input type="text" placeholder="Username" />
-        <input type="password" placeholder="Password" />
-    <button type="button" (click)="goToSchedule()">Login</button>
-    <button type="button" (click)="goToRegister()">Register</button>
+        <h1>Login</h1>
+        <form (ngSubmit)="onSubmit()">
+            <div>
+                <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+            </div>
+            <div>
+                <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+            </div>
+            <div *ngIf="error" style="color: red;">{{ error }}</div>
+            <button type="submit" [disabled]="loading">Login</button>
+            <button type="button" (click)="goToRegister()">Register</button>
+        </form>
     </div>
 </main>
