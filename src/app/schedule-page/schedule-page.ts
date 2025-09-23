@@ -18,15 +18,39 @@ export class SchedulePage {
   constructor(private router: Router, private http: HttpClient) {}
 
   onSubmit() {
+    const user = JSON.parse(localStorage.getItem('auth_user') || 'null');
+    const userId = user?.id;
+    if (!userId) {
+      alert('You must be logged in.');
+      this.router.navigate(['']);
+      return;
+    }
+    if (!this.meetingTitle.trim()) {
+      alert('Meeting title is required.');
+      return;
+    }
+    if (!this.datetime) {
+      alert('Date and time are required.');
+      return;
+    }
     const meetingData = {
+      user_id: userId,
       title: this.meetingTitle,
       description: this.meetingDescription,
       datetime: this.datetime
     };
     this.http.post('http://localhost:3000/api/schedule', meetingData)
       .subscribe({
-        next: () => alert('Meeting scheduled and saved!'),
-        error: err => alert('Failed to schedule meeting')
+        next: () => {
+          alert('Meeting scheduled and saved!');
+          this.meetingTitle = '';
+          this.meetingDescription = '';
+          this.datetime = '';
+        },
+        error: err => {
+          console.error('Failed to schedule meeting', err);
+          alert('Failed to schedule meeting');
+        }
       });
   }
 

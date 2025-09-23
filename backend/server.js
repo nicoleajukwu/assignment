@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 const signToken = (user) => jwt.sign({ id: user.id, name: user.name, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
@@ -21,12 +22,12 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-
+// Health check endpoint
 app.get('/', (_req, res) => {
   res.send('Server is running');
 });
 
-//get users endpoint
+// Get users endpoint
 app.get('/api/users', (_req, res) => {
   const sql = 'SELECT id, name, email, address, phone FROM users ORDER BY id DESC';
   db.query(sql, (err, results) => {
@@ -38,7 +39,7 @@ app.get('/api/users', (_req, res) => {
   });
 });
 
-// Register endpoint
+// Register users endpoint
 app.post('/api/register', async (req, res) => {
   const { name, email, address, phone, password } = req.body;
   if (!name || !email || !password) {
@@ -101,6 +102,7 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+// Meetings endpoints
 app.get('/api/users/:id/meetings', (req, res) => {
   const userId = req.params.id;
   const sql = 'SELECT * FROM meetings WHERE user_id = ? ORDER BY datetime DESC';
@@ -113,6 +115,7 @@ app.get('/api/users/:id/meetings', (req, res) => {
   });
 });
 
+// Schedule meeting endpoint
 app.post('/api/schedule', (req, res) => {
   const { user_id, title, description, datetime } = req.body;
   if (!user_id || !title || !datetime) {

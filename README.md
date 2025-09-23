@@ -1,59 +1,52 @@
-# Assignment
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+# Meeting Scheduler App
 
-## Development server
+This is a full-stack web application for user registration, login, and meeting scheduling. It uses Angular for the frontend and Node.js/Express with MySQL for the backend.
 
-To start a local development server, run:
+## Features
+
+- User registration and login (with password hashing and JWT session)
+- Schedule meetings with a title, description, and date/time
+- Each meeting is linked to the logged-in user
+- View and manage meetings per user
+
+## How to Run
+
+### 1. Start the Backend (Node.js/Express)
+
+Open a terminal and run:
+
+```bash
+cd backend
+node server.js
+```
+
+The backend will start on [http://localhost:3000](http://localhost:3000) and connect to your MySQL database (configure credentials in `.env`).
+
+### 2. Start the Frontend (Angular)
+
+Open a separate terminal and run:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The frontend will start on [http://localhost:4200](http://localhost:4200).
 
-## Code scaffolding
+### 3. Usage
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Register a new user account.
+2. Log in with your credentials.
+3. Schedule meetings using the form (meeting title and date/time are required).
+4. Log out when finished.
 
-```bash
-ng generate component component-name
-```
+## Prerequisites
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Node.js and npm installed
+- MySQL server running and a database created (see backend `.env` for config)
 
-```bash
-ng generate --help
-```
+## Notes
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- The backend must be running before you can register, log in, or schedule meetings.
+- All meeting data is stored in the MySQL `meetings` table, linked to the user by `user_id`.
+- The frontend and backend communicate via REST API endpoints.
