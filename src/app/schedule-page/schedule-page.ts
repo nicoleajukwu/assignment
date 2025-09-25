@@ -1,27 +1,62 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-schedule-page',
-  imports: [DatePipe],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './schedule-page.html',
   styleUrl: './schedule-page.css'
 })
 export class SchedulePage {
-  calendarForm: FormGroup;
+  meetingTitle = '';
+  meetingDescription = '';
+  datetime = '';
 
-  constructor(private fb: FormBuilder) {
-    this.calendarForm = this.fb.group({
-      date: [''],
-      event: ['']
-    });
-  }
+  constructor(private router: Router, private http: HttpClient) {}
 
   onSubmit() {
-    const formData = this.calendarForm.value;
-    console.log('Submitted Data:', formData);
-    // Here you can handle the data payload as needed
+    const user = JSON.parse(localStorage.getItem('auth_user') || 'null');
+    const userId = user?.id;
+    if (!userId) {
+      alert('You must be logged in.');
+      this.router.navigate(['']);
+      return;
+    }
+    if (!this.meetingTitle.trim()) {
+      alert('Meeting title is required.');
+      return;
+    }
+    if (!this.datetime) {
+      alert('Date and time are required.');
+      return;
+    }
+    const meetingData = {
+      user_id: userId,
+      title: this.meetingTitle,
+      description: this.meetingDescription,
+      datetime: this.datetime
+    };
+    this.http.post('http://localhost:3000/api/schedule', meetingData)
+      .subscribe({
+        next: () => {
+          alert('Meeting scheduled and saved!');
+          this.meetingTitle = '';
+          this.meetingDescription = '';
+          this.datetime = '';
+        },
+        error: err => {
+          console.error('Failed to schedule meeting', err);
+          alert('Failed to schedule meeting');
+        }
+      });
+  }
+
+  logout() {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    this.router.navigate(['']);
   }
 }

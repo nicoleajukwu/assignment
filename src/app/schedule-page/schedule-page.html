@@ -1,2 +1,17 @@
-<p>schedule-page works!</p>
-<p>Calendar Component</p>
+<form class="schedule-form-wrapper" (ngSubmit)="onSubmit()">
+	<h2>Schedule Page</h2>
+	<div class="input-container">
+		<label for="meeting-title">Meeting Title:</label>
+		<input type="text" id="meeting-title" name="meetingTitle" placeholder="Enter meeting title" [(ngModel)]="meetingTitle" required>
+	</div>
+	<div class="input-container">
+		<label for="meeting-description">Meeting Description:</label>
+		<input type="text" id="meeting-description" name="meetingDescription" placeholder="Enter meeting description" [(ngModel)]="meetingDescription" required>
+	</div>
+	<div class="input-container">
+		<label for="datetime">Select date and time:</label>
+		<input type="datetime-local" id="datetime" name="datetime" [(ngModel)]="datetime" required>
+	</div>
+	<button type="submit">Schedule Meeting</button>
+	<button type="button" (click)="logout()">Logout</button>
+</form>
